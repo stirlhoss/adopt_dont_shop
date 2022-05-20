@@ -2,7 +2,7 @@
 # The data can then be loaded with the bin/rails db:seed command (or created alongside the database with db:setup).
 #
 # Examples:
-#  Shelter.destroy_all
+  Shelter.destroy_all
   Pet.destroy_all
   VeterinaryOffice.destroy_all
   Veterinarian.destroy_all
