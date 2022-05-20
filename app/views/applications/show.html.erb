@@ -5,4 +5,16 @@
  <p>Applicant zipcode: <%= @application.zipcode %></p>
  <p>Applicant description: <%= @application.description %></p>
  <p>Application status: <%= @application.status %></p>
+
+<%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
+   <%= f.label :search, "Add a Pet to this Application" %>
+   <%= f.text_field :search %>
+   <%= f.submit "Submit" %>
+ <% end %>
+
  <p>Pets applied for: </p>
+ <% if @searched_pets %>
+ <% @searched_pets.each do |pet| %>
+ <p> <%= pet.name %></p>
+ <% end %>
+ <% end %>
