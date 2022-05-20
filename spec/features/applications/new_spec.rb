@@ -16,7 +16,6 @@ RSpec.describe "Applications New Page" do
       fill_in("city", with: "Peoria")
       fill_in("state", with: "IL")
       fill_in("zipcode", with: "61606")
-      fill_in("description", with: "I love pets")
 
       click_on "Submit"
 
@@ -27,7 +26,7 @@ RSpec.describe "Applications New Page" do
       expect(page).to have_content("Peoria")
       expect(page).to have_content("IL")
       expect(page).to have_content("61606")
-      expect(page).to have_content("I love pets")
+      expect(page).to have_content("No Description")
     end
 
     it "gives an error when not all fields are filled out in application form" do
@@ -37,7 +36,6 @@ RSpec.describe "Applications New Page" do
       fill_in("address", with: "1234 Test Road")
       fill_in("city", with: "Peoria")
       fill_in("state", with: "IL")
-      fill_in("description", with: "I love pets")
 
       click_on "Submit"
 
