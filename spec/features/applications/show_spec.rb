@@ -6,6 +6,7 @@ require 'rails_helper'
      @pet_1 = @shelter_1.pets.create!(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: true)
      @application_1 = Application.create!(name: "Mike", address: "1234 Street St", city: 'Denver', state: 'CO', zipcode: '69420', description: "I care about pets", status: "Pending")
    end
+
    it "visit show page and shows application attributes" do
      visit "/applications/#{@application_1.id}"
      expect(page).to have_content("Mike")
@@ -17,4 +18,17 @@ require 'rails_helper'
      expect(page).to have_content("Pending")
      expect(page).to have_content("Pets applied for:")
    end
+
+   it "can add pet to application" do
+     @shelter_1 = Shelter.create!(name: 'Aurora shelter', city: 'Aurora, CO', foster_program: false, rank: 9)
+     @pet_1 = @shelter_1.pets.create!(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: true)
+     @application_1 = Application.create!(name: "Mike", address: "1234 Street St", city: 'Denver', state: 'CO', zipcode: '69420', description: "No Description", status: "Pending")
+     visit "/applications/#{@application_1.id}"
+     expect(page).to have_button("Submit")
+     expect(page).to have_content("Add a Pet to this Application")
+     fill_in :search, with: "Mr. Pirate"
+     click_on("Submit")
+     expect(current_path).to eq("/applications/#{@application_1.id}")
+     expect(page).to have_content(@pet_1.name)
+    end
  end
