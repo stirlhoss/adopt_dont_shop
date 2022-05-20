@@ -13,8 +13,13 @@ class ApplicationsController < ApplicationController
 
    def create
      application = Application.create(app_params)
-     redirect_to "/applications/#{application.id}"
-   end
+      if application.save
+        redirect_to "/applications/#{application.id}"
+      else
+        flash[:error] = "Error: Please Fill in ALL Fields"
+        redirect_to '/applications/new'
+      end
+    end
 
    private
    def app_params
