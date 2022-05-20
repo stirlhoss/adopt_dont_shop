@@ -1,0 +1,16 @@
+<%= form_with url: "/applications/", method: :post, local:true do |form| %>
+<p><%= form.label :name, "Name:"  %>
+<%= form.text_field :name %></p>
+<p><%= form.label :address, "Address:"  %>
+<%= form.text_field :address %></p>
+<p><%= form.label :city, "City:"  %>
+<%= form.text_field :city %></p>
+<p><%= form.label :state, "State:"  %>
+<%= form.text_field :state %></p>
+<p><%= form.label :zipcode, "Zipcode:"  %>
+<%= form.text_field :zipcode %></p>
+<p><%= form.label :description, "Why would YOU be a good home?:"  %>
+<%= form.text_field :description %></p>
+<%= form.hidden_field :status, :value => "In Progress" %>
+<%= form.submit "Submit" %>
+<% end %>
