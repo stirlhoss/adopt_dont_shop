@@ -12,9 +12,16 @@
    <%= f.submit "Submit" %>
  <% end %>
 
- <p>Pets applied for: </p>
  <% if @searched_pets %>
  <% @searched_pets.each do |pet| %>
- <p> <%= pet.name %></p>
+ <p> <%= pet.name %>
+ <%= link_to "Adopt this Pet", url: "/applications/#{@application.id}", params: {pet: pet.id}, method: :get, local: true %></p>
+ <p><%= pet.breed %></p>
+ <p><%= pet.age %></p>
  <% end %>
  <% end %>
+
+  <p>Pets Applied For:
+  <% @applied_pets.each do |pet| %>
+  <%= pet.name %> </p>
+  <% end %>
