@@ -44,16 +44,17 @@ require 'rails_helper'
     it "can submit an application" do
       visit "/applications/#{@application_1.id}"
       expect(page).to have_content("Application Status: In Progress")
+      expect(page).to_not have_content("Submit Application")
       fill_in :search, with: "Mr. Pirate"
       click_on("Submit")
       click_link("Adopt this Pet")
       fill_in :fill_description, with: "I love pets"
       click_on ("Submit Application")
-      save_and_open_page
       expect(current_path).to eq("/applications/#{@application_1.id}")
       expect(page).to have_content("Application Status: Pending")
       expect(page).to_not have_content("Application Status: In Progress")
       expect(page).to_not have_content("Add a Pet to this Application")
+
     end
 
  end
