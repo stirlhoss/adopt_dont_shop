@@ -9,8 +9,7 @@
 <%= form.text_field :state %></p>
 <p><%= form.label :zipcode, "Zipcode:"  %>
 <%= form.text_field :zipcode %></p>
-<p><%= form.label :description, "Why would YOU be a good home?:"  %>
-<%= form.text_field :description %></p>
+<%= form.hidden_field :description, :value => "No Description" %>
 <%= form.hidden_field :status, :value => "In Progress" %>
 <%= form.submit "Submit" %>
 <% end %>

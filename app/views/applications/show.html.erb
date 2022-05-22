@@ -5,4 +5,34 @@
  <p>Applicant zipcode: <%= @application.zipcode %></p>
  <p>Applicant description: <%= @application.description %></p>
  <p>Application status: <%= @application.status %></p>
- <p>Pets applied for: </p>
+
+<% if @application.status == "In Progress" %>
+<%= form_with url: "/applications/#{@application.id}", method: :get, local: true do |f| %>
+   <%= f.label :search, "Add a Pet to this Application" %>
+   <%= f.text_field :search %>
+   <%= f.submit "Submit" %>
+ <% end %> <% end %>
+
+ <% if @searched_pets %>
+ <% @searched_pets.each do |pet| %>
+ <p> <%= pet.name %>
+ <%= link_to "Adopt this Pet", url: "/applications/#{@application.id}", params: {pet: pet.id}, method: :get, local: true %></p>
+ <p><%= pet.breed %></p>
+ <p><%= pet.age %></p>
+ <% end %>
+ <% end %>
+
+ <p>Pets Applied For:
+ <% @applied_pets.each do |pet| %>
+ <%= pet.name %> </p>
+ <% end %>
+
+ <% if @application.status == "In Progress" and !@application.pets.empty? %>
+ <%= form_with url: "/applications/#{@application.id}", method: :patch, local:true do |form| %>
+ <%= form.label :fill_description, "Why are you a good candidate for adoption?" %>
+ <%= form.text_field :fill_description %>
+ <%= form.submit "Submit Application" %>
+ <% end %> <% end %>
+
+
+<h3>Application Status: <%= @application.status %></h3>
