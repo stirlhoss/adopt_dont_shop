@@ -26,7 +26,7 @@ RSpec.describe Shelter, type: :model do
   describe 'class methods' do
     describe '#search' do
       it 'returns partial matches' do
-        expect(Shelter.search("Fancy")).to eq([@shelter_3])
+        expect(Shelter.search('Fancy')).to eq([@shelter_3])
       end
     end
 
@@ -47,30 +47,43 @@ RSpec.describe Shelter, type: :model do
         expect(Shelter.order_by_name_desc).to eq([@shelter_2, @shelter_3, @shelter_1])
       end
     end
-  end
 
-  describe 'instance methods' do
-    describe '.adoptable_pets' do
-      it 'only returns pets that are adoptable' do
-        expect(@shelter_1.adoptable_pets).to eq([@pet_2, @pet_4])
+    describe '#show_pending' do
+      it 'only shows shelters that have pending applications' do
+        application_1 = Application.create!(name: 'Mike', address: '1234 Street St', city: 'Denver', state: 'CO',
+                                            zipcode: '69420', description: 'I care about pets', status: 'Pending')
+        application_2 = Application.create!(name: 'James', address: '12 Street St', city: 'Denver', state: 'CO',
+                                            zipcode: '69420', description: 'I care about pets', status: 'In Progress')
+        pet_application_1 = PetApplication.create!(application: application_1, pet: @pet_3)
+        pet_application_2 = PetApplication.create!(application: application_2, pet: @pet_1)
+
+        expect(Shelter.show_pending).to eq([@shelter_3])
       end
     end
 
-    describe '.alphabetical_pets' do
-      it 'returns pets associated with the given shelter in alphabetical name order' do
-        expect(@shelter_1.alphabetical_pets).to eq([@pet_4, @pet_2])
+    describe 'instance methods' do
+      describe '.adoptable_pets' do
+        it 'only returns pets that are adoptable' do
+          expect(@shelter_1.adoptable_pets).to eq([@pet_2, @pet_4])
+        end
       end
-    end
 
-    describe '.shelter_pets_filtered_by_age' do
-      it 'filters the shelter pets based on given params' do
-        expect(@shelter_1.shelter_pets_filtered_by_age(5)).to eq([@pet_4])
+      describe '.alphabetical_pets' do
+        it 'returns pets associated with the given shelter in alphabetical name order' do
+          expect(@shelter_1.alphabetical_pets).to eq([@pet_4, @pet_2])
+        end
       end
-    end
 
-    describe '.pet_count' do
-      it 'returns the number of pets at the given shelter' do
-        expect(@shelter_1.pet_count).to eq(3)
+      describe '.shelter_pets_filtered_by_age' do
+        it 'filters the shelter pets based on given params' do
+          expect(@shelter_1.shelter_pets_filtered_by_age(5)).to eq([@pet_4])
+        end
+      end
+
+      describe '.pet_count' do
+        it 'returns the number of pets at the given shelter' do
+          expect(@shelter_1.pet_count).to eq(3)
+        end
       end
     end
   end
