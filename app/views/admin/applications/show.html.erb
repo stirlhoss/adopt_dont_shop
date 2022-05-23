@@ -17,10 +17,18 @@
 <%= form.hidden_field :pet_id, value: "#{pet.id}" %>
 <%= form.submit "Approve this Pet" %>
 <% end %>
+
+<%= form_with url: "/admin/applications/#{@application.id}", method: :patch, local: true do |form| %>
+<%= form.hidden_field :pet_status, value: "Rejected" %>
+<%= form.hidden_field :pet_id, value: "#{pet.id}" %>
+<%= form.submit "Reject this Pet" %>
 <% end %>
+<% end %>
+
 
 <% if PetApplication.pet_app_find(@application.id, pet.id).status == "Approved" %>
-<strong>Approved</strong>
+<p><strong>Approved</strong></p>
+<% elsif PetApplication.pet_app_find(@application.id, pet.id).status == "Rejected" %>
+<p><strong>Rejected</strong></p>
 <% end %>
-
 <% end %>
