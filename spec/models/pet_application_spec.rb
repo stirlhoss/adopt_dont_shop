@@ -10,7 +10,6 @@ RSpec.describe PetApplication, type: :model do
   end
 
   it "find pet_application for specific pet and application combination" do
-    binding.pry
     expect(PetApplication.pet_app_find(@application_1.id, @pet_3.id)).to eq(@pet_application_1)
   end
 end
