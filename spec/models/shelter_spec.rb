@@ -24,6 +24,14 @@ RSpec.describe Shelter, type: :model do
   end
 
   describe 'class methods' do
+    describe '.only_name_and_city' do
+      it "returns only name and city attributes from a shelter" do
+        shelter_69 = Shelter.only_name_and_city(@shelter_1.id)
+        expect(shelter_69.name).to eq("Aurora shelter")
+        expect(shelter_69.city).to eq("Aurora, CO")
+      end
+    end
+
     describe '#search' do
       it 'returns partial matches' do
         expect(Shelter.search('Fancy')).to eq([@shelter_3])
@@ -60,6 +68,7 @@ RSpec.describe Shelter, type: :model do
         expect(Shelter.show_pending).to eq([@shelter_3])
       end
     end
+  end
 
     describe 'instance methods' do
       describe '.adoptable_pets' do
@@ -87,4 +96,3 @@ RSpec.describe Shelter, type: :model do
       end
     end
   end
-end
