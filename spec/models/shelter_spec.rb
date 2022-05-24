@@ -24,6 +24,13 @@ RSpec.describe Shelter, type: :model do
   end
 
   describe 'class methods' do
+
+    describe '#pending_abc' do
+      it "sorts by name" do
+        expect(Shelter.pending_abc).to eq([@shelter_1,@shelter_3,@shelter_2])
+      end
+    end
+
     describe '.only_name_and_city' do
       it "returns only name and city attributes from a shelter" do
         shelter_69 = Shelter.only_name_and_city(@shelter_1.id)
