@@ -56,4 +56,13 @@ RSpec.describe "admin application show page" do
     expect(current_path).to eq("/admin/applications/#{@application_1.id}")
     expect(page).to have_content("Application Status: Approved")
   end
+
+  it 'once all pets on page have been accepted/rejected, application is rejected' do
+    @application_1.pets << @pet_1
+    visit "/admin/applications/#{@application_1.id}"
+    click_on ("Approve this Pet"), match: :first
+    click_on "Reject this Pet"
+    expect(current_path).to eq("/admin/applications/#{@application_1.id}")
+    expect(page).to have_content("Application Status: Rejected")
+  end
 end
