@@ -6,6 +6,10 @@ class Shelter < ApplicationRecord
 
   has_many :pets, dependent: :destroy
 
+  def self.pending_abc
+    order(:name)
+  end
+
   def self.only_name_and_city(id)
     find_by_sql("SELECT name, city FROM shelters WHERE shelters.id = #{id}").first
   end
