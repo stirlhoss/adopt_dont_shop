@@ -10,7 +10,7 @@
  <p><% @application.pets.each do |pet| %></p>
  <%= pet.name %>
 
- <% if PetApplication.pet_app_find(@application.id, pet.id).status == "open" %>
+ <% if PetApplication.pet_app_find(@application.id, pet.id).status == "open" && pet.adoptable == true %>
 
 <%= form_with url: "/admin/applications/#{@application.id}", method: :patch, local: true do |form| %>
 <%= form.hidden_field :pet_status, value: "Approved" %>
@@ -23,6 +23,9 @@
 <%= form.hidden_field :pet_id, value: "#{pet.id}" %>
 <%= form.submit "Reject this Pet" %>
 <% end %>
+
+<% else %>
+<p>This pet has already been adopted!</p>
 <% end %>
 
 
