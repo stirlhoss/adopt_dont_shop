@@ -15,4 +15,10 @@ class Application < ApplicationRecord
        pet_apps.status == 'Approved'
      end
    end
+
+   def all_updated?
+     self.pet_applications.all? do |pet_apps|
+       pet_apps.status == 'Approved' || pet_apps.status == 'Rejected'
+     end
+   end
  end
