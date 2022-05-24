@@ -11,6 +11,9 @@ class Admin::ApplicationsController < ApplicationController
     if @application.all_approved?
       @application.status = "Approved"
       @application.save
+    elsif @application.all_updated?
+      @application.status = "Rejected"
+      @application.save
     end
     redirect_to "/admin/applications/#{@application.id}"
   end
