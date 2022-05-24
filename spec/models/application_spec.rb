@@ -35,5 +35,23 @@ RSpec.describe Application, type: :model do
 
       expect(@application_1.all_approved?).to eq(true)
     end
+
+    it 'returns false if not all pets have a status' do
+      @pet_application_1.status = "Approved"
+      @pet_application_2.status = "Open"
+      @pet_application_1.save
+      @pet_application_2.save
+
+      expect(@application_1.all_updated?).to eq(false)
+    end
+
+    it 'returns true if all pets have a status' do
+      @pet_application_1.status = "Approved"
+      @pet_application_2.status = "Rejected"
+      @pet_application_1.save
+      @pet_application_2.save
+
+      expect(@application_1.all_updated?).to eq(true)
+    end
   end
 end
