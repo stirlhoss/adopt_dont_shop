@@ -21,4 +21,11 @@ class Application < ApplicationRecord
        pet_apps.status == 'Approved' || pet_apps.status == 'Rejected'
      end
    end
+
+   def no_longer_adoptable
+     self.pets.each do |pet|
+       pet.adoptable = false
+       pet.save
+     end
+   end
  end
