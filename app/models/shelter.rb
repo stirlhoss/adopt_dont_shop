@@ -1,20 +1,21 @@
 class Shelter < ApplicationRecord
+
   validates :name, presence: true
   validates :rank, presence: true, numericality: true
   validates :city, presence: true
 
   has_many :pets, dependent: :destroy
 
+  def self.only_name_and_city(id)
+    find_by_sql("SELECT name, city FROM shelters WHERE shelters.id = #{id}").first
+  end
+
   def self.order_by_recently_created
     order(created_at: :desc)
   end
 
   def self.order_by_name_desc
-    find_by_sql("SELECT * FROM shelters ORDER BY name desc;")
-  end
-
-  def self.show_pending
-    Shelter.joins(pets: :applications).where("applications.status = 'Pending'")
+    find_by_sql("SELECT * FROM shelters ORDER BY name desc")
   end
 
   def self.order_by_number_of_pets
@@ -22,6 +23,10 @@ class Shelter < ApplicationRecord
       .joins("LEFT OUTER JOIN pets ON pets.shelter_id = shelters.id")
       .group("shelters.id")
       .order("pets_count DESC")
+  end
+
+  def self.show_pending
+    joins(pets: :applications).where("applications.status = 'Pending'")
   end
 
   def pet_count
