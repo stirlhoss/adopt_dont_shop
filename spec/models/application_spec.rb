@@ -53,5 +53,12 @@ RSpec.describe Application, type: :model do
 
       expect(@application_1.all_updated?).to eq(true)
     end
+
+    it 'changes pets adoptable attribute to false' do
+      @application_1.no_longer_adoptable
+
+      expect(@application_1.pets[0].adoptable).to eq(false)
+      expect(@application_1.pets[1].adoptable).to eq(false)
+    end
   end
 end
