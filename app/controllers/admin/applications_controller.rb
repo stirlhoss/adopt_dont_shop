@@ -10,6 +10,7 @@ class Admin::ApplicationsController < ApplicationController
     pet_application.save
     if @application.all_approved?
       @application.status = "Approved"
+      @application.no_longer_adoptable
       @application.save
     elsif @application.all_updated?
       @application.status = "Rejected"
