@@ -10,7 +10,7 @@ class Shelter < ApplicationRecord
   end
 
   def self.order_by_name_desc
-    order(name: :desc)
+    find_by_sql("SELECT * FROM shelters ORDER BY name desc;")
   end
 
   def self.show_pending

@@ -1,16 +1,16 @@
 <h1> <%= @application.name %></h1>
- <p> Applicant address: <%= @application.address %></p>
- <p>Applicant city: <%= @application.city %></p>
- <p>Applicant state: <%= @application.state %></p>
- <p>Applicant zipcode: <%= @application.zipcode %></p>
- <p>Applicant description: <%= @application.description %></p>
- <p>Application status: <%= @application.status %></p>
+ <p> Applicant Address: <%= @application.address %></p>
+ <p>Applicant City: <%= @application.city %></p>
+ <p>Applicant State: <%= @application.state %></p>
+ <p>Applicant Zipcode: <%= @application.zipcode %></p>
+ <p>Applicant Description: <%= @application.description %></p>
+ <p>Application Status: <%= @application.status %></p>
 
  <br><p>Pets Applied for:</p>
  <p><% @application.pets.each do |pet| %></p>
  <%= pet.name %>
 
- <% if PetApplication.pet_app_find(@application.id, pet.id).status == "open" %>
+ <% if PetApplication.pet_app_find(@application.id, pet.id).status == "open" && pet.adoptable == true %>
 
 <%= form_with url: "/admin/applications/#{@application.id}", method: :patch, local: true do |form| %>
 <%= form.hidden_field :pet_status, value: "Approved" %>
@@ -23,6 +23,9 @@
 <%= form.hidden_field :pet_id, value: "#{pet.id}" %>
 <%= form.submit "Reject this Pet" %>
 <% end %>
+
+<% else %>
+<p>This pet has already been adopted!</p>
 <% end %>
 
 
