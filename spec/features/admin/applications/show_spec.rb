@@ -81,6 +81,6 @@ RSpec.describe 'admin application show page' do
     visit "/admin/applications/#{@application_2.id}"
 
     expect(page).to_not have_button('Approve this Pet')
-    expect(page).to have_content('This pet has already been adopted!')
+    expect(page).to have_content('This pet has been adopted!')
   end
 end
