@@ -8,6 +8,7 @@
 
 <h3>Action Required</h3>
 <% @pending_pets.each do |pet| %>
+<% pet.applications.each do |application| %>
     <p><%= pet.name %></p>
-    <%#= link_to "Go to Application", "/admin/applications/#{}" %>
-<% end %>
+    <%= link_to "Go to Application", "/admin/applications/#{application.id}" %>
+<% end %> <% end %>
