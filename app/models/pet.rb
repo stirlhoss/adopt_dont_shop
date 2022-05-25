@@ -12,4 +12,16 @@ class Pet < ApplicationRecord
   def self.adoptable
     where(adoptable: true)
   end
+
+  def self.avg_age
+    where(adoptable: true).average(:age).to_f
+  end
+
+  def self.number_of_pets
+    where(adoptable: true).count
+  end
+
+  def self.number_of_adopted
+    where(adoptable: false).count
+  end
 end
