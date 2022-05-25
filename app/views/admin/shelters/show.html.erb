@@ -5,3 +5,9 @@
 <p>Average Age of Pet at this Shelter: <%= @pets.avg_age %></p>
 <p>Number of Pets at this Shelter: <%= @pets.number_of_pets %></p>
 <p>Number of Pets who have been Adopted: <%= @pets.number_of_adopted %></p>
+
+<h3>Action Required</h3>
+<% @pending_pets.each do |pet| %>
+    <p><%= pet.name %></p>
+    <%#= link_to "Go to Application", "/admin/applications/#{}" %>
+<% end %>
