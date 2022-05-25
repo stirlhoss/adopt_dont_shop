@@ -34,5 +34,27 @@ RSpec.describe 'Admin::Shelters::Index' do
       expect(page).to have_content('Shelters with Pending Applications:')
       expect(page).to have_content('Fancy pets of Colorado', count: 2)
     end
+
+    it "shows pending shelters in alphabetical ascending order" do
+      application_1 = Application.create!(name: 'Mike', address: '1234 Street St', city: 'Denver', state: 'CO',
+                                          zipcode: '69420', description: 'I care about pets', status: 'Pending')
+      application_2 = Application.create!(name: 'James', address: '12 Street St', city: 'Denver', state: 'CO',
+                                          zipcode: '69420', description: 'I care about pets', status: 'Pending')
+      pet_application_1 = PetApplication.create!(application: application_1, pet: @pet_3)
+      pet_application_2 = PetApplication.create!(application: application_2, pet: @pet_1)
+      visit '/admin/shelters'
+      within '#pending' do
+        expect(@shelter_1.name).to appear_before(@shelter_3.name)
+      end
+    end
+
+    it "links shelters to shelter show page" do
+      visit '/admin/shelters'
+      expect(page).to have_link("#{@shelter_1.name}")
+      expect(page).to have_link("#{@shelter_2.name}")
+      expect(page).to have_link("#{@shelter_3.name}")
+      click_link "#{@shelter_1.name}"
+      expect(current_path).to eq("/admin/shelters/#{@shelter_1.id}")
+    end
   end
 end

@@ -1,2 +1,14 @@
 <h1>Shelter Name: <%= @shelter.name %> </h1>
 <h3>Shelter Location: <%= @shelter.city %></h3>
+
+<h3>Shelter Statistics:</h3>
+<p>Average Age of Pet at this Shelter: <%= @pets.avg_age %></p>
+<p>Number of Pets at this Shelter: <%= @pets.number_of_pets %></p>
+<p>Number of Pets who have been Adopted: <%= @pets.number_of_adopted %></p>
+
+<h3>Action Required</h3>
+<% @pending_pets.each do |pet| %>
+<% pet.applications.each do |application| %>
+    <p><%= pet.name %></p>
+    <%= link_to "Go to Application", "/admin/applications/#{application.id}" %>
+<% end %> <% end %>

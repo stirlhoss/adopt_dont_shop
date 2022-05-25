@@ -18,17 +18,23 @@ RSpec.describe Shelter, type: :model do
     @shelter_3 = Shelter.create(name: 'Fancy pets of Colorado', city: 'Denver, CO', foster_program: true, rank: 10)
 
     @pet_1 = @shelter_1.pets.create(name: 'Mr. Pirate', breed: 'tuxedo shorthair', age: 5, adoptable: false)
-    @pet_2 = @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 3, adoptable: true)
+    @pet_2 = @shelter_1.pets.create(name: 'Clawdia', breed: 'shorthair', age: 5, adoptable: true)
     @pet_3 = @shelter_3.pets.create(name: 'Lucille Bald', breed: 'sphynx', age: 8, adoptable: true)
     @pet_4 = @shelter_1.pets.create(name: 'Ann', breed: 'ragdoll', age: 5, adoptable: true)
   end
 
   describe 'class methods' do
+    describe '#pending_abc' do
+      it 'sorts by name' do
+        expect(Shelter.pending_abc).to eq([@shelter_1, @shelter_3, @shelter_2])
+      end
+    end
+
     describe '.only_name_and_city' do
-      it "returns only name and city attributes from a shelter" do
+      it 'returns only name and city attributes from a shelter' do
         shelter_69 = Shelter.only_name_and_city(@shelter_1.id)
-        expect(shelter_69.name).to eq("Aurora shelter")
-        expect(shelter_69.city).to eq("Aurora, CO")
+        expect(shelter_69.name).to eq('Aurora shelter')
+        expect(shelter_69.city).to eq('Aurora, CO')
       end
     end
 
@@ -70,29 +76,41 @@ RSpec.describe Shelter, type: :model do
     end
   end
 
-    describe 'instance methods' do
-      describe '.adoptable_pets' do
-        it 'only returns pets that are adoptable' do
-          expect(@shelter_1.adoptable_pets).to eq([@pet_2, @pet_4])
-        end
+  describe 'instance methods' do
+    describe '.adoptable_pets' do
+      it 'only returns pets that are adoptable' do
+        expect(@shelter_1.adoptable_pets).to eq([@pet_2, @pet_4])
       end
+    end
 
-      describe '.alphabetical_pets' do
-        it 'returns pets associated with the given shelter in alphabetical name order' do
-          expect(@shelter_1.alphabetical_pets).to eq([@pet_4, @pet_2])
-        end
+    describe '.alphabetical_pets' do
+      it 'returns pets associated with the given shelter in alphabetical name order' do
+        expect(@shelter_1.alphabetical_pets).to eq([@pet_4, @pet_2])
       end
+    end
 
-      describe '.shelter_pets_filtered_by_age' do
-        it 'filters the shelter pets based on given params' do
-          expect(@shelter_1.shelter_pets_filtered_by_age(5)).to eq([@pet_4])
-        end
+    describe '.shelter_pets_filtered_by_age' do
+      it 'filters the shelter pets based on given params' do
+        expect(@shelter_1.shelter_pets_filtered_by_age(5)).to eq([@pet_2, @pet_4])
       end
+    end
 
-      describe '.pet_count' do
-        it 'returns the number of pets at the given shelter' do
-          expect(@shelter_1.pet_count).to eq(3)
-        end
+    describe '.pet_count' do
+      it 'returns the number of pets at the given shelter' do
+        expect(@shelter_1.pet_count).to eq(3)
+      end
+    end
+
+    describe '.show_pending_pets' do
+      it 'shows all pets from that shelter that appear on a pending application' do
+        application_1 = Application.create!(name: 'Mike', address: '1234 Street St', city: 'Denver', state: 'CO',
+                                            zipcode: '69420', description: 'I care about pets', status: 'Pending')
+        application_2 = Application.create!(name: 'James', address: '12 Street St', city: 'Denver', state: 'CO',
+                                            zipcode: '69420', description: 'I care about pets', status: 'Pending')
+        pet_application_1 = PetApplication.create!(application: application_1, pet: @pet_2)
+        pet_application_2 = PetApplication.create!(application: application_2, pet: @pet_4)
+        expect(@shelter_1.show_pending_pets).to eq([@pet_2, @pet_4])
       end
     end
   end
+end
