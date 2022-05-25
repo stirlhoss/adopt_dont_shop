@@ -1,10 +1,11 @@
+All Shelters:
 <% @shelters.each do |shelter| %>
-    <%= shelter.name %>
+    <p><%= link_to "#{shelter.name}", "/admin/shelters/#{shelter.id}"%></p>
 <% end %>
 
 <div id = "pending" >
 <h2>Shelters with Pending Applications: </h2>
 <% @pending_shelters.each do |shelter| %>
-    <%= shelter.name %>
+    <%= link_to "#{shelter.name}", "/admin/shelters/#{shelter.id}" %>
 <% end %>
 </div>
