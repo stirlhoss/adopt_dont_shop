@@ -39,7 +39,7 @@ RSpec.describe "Admin Application Show Page" do
     expect(page).to have_content("#{@pet_3.name}")
   end
 
-  xit 'links to admin application show page so the pet can be accepted or rejected' do
+  it 'links to admin application show page so the pet can be accepted or rejected' do
     application_1 = Application.create!(name: "Mike", address: "1234 Street St", city: 'Denver', state: 'CO', zipcode: '69420', description: "I care about pets", status: "Pending")
     pet_application_1 = PetApplication.create!(application: application_1, pet: @pet_3)
     visit "/admin/shelters/#{@shelter_1.id}"
