@@ -27,4 +27,26 @@ RSpec.describe "Admin Application Show Page" do
     visit "/admin/shelters/#{@shelter_1.id}"
     expect(page).to have_content("Number of Pets who have been Adopted: #{@shelter_1.pets.number_of_adopted}")
   end
+
+  it 'shows all pets from that shelter with open application status' do
+    application_1 = Application.create!(name: "Mike", address: "1234 Street St", city: 'Denver', state: 'CO', zipcode: '69420', description: "I care about pets", status: "Pending")
+    pet_application_1 = PetApplication.create!(application: application_1, pet: @pet_3)
+    pet_application_2 = PetApplication.create!(application: application_1, pet: @pet_2)
+    visit "/admin/shelters/#{@shelter_1.id}"
+
+    expect(page).to have_content("Action Required")
+    expect(page).to have_content("#{@pet_2.name}")
+    expect(page).to have_content("#{@pet_3.name}")
+  end
+
+  xit 'links to admin application show page so the pet can be accepted or rejected' do
+    application_1 = Application.create!(name: "Mike", address: "1234 Street St", city: 'Denver', state: 'CO', zipcode: '69420', description: "I care about pets", status: "Pending")
+    pet_application_1 = PetApplication.create!(application: application_1, pet: @pet_3)
+    visit "/admin/shelters/#{@shelter_1.id}"
+
+    click_on "Go to Application"
+
+
+    expect(current_path).to eq("/admin/applications/#{application_1.id}")
+  end
 end
