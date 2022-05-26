@@ -2,7 +2,7 @@
 
 Adopt, don't shop is a website that I built as part of a paired projcet while at the Turing school of software and design. 
 
-The app is hosted at [[https://backup-adopt-dont-shop.herokuapp.com/][Adopt don't shop]] and currently has no front end formatting. 
+The app is hosted at [Adopt don't shop](https://backup-adopt-dont-shop.herokuapp.com/) and currently has no front end formatting. 
 
 ## Goals
 
